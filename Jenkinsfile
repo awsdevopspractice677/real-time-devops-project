@@ -1,10 +1,6 @@
 pipeline {
     agent any
 
-    tools {
-        maven 'Maven'   // Must exist in Jenkins Global Tool Configuration
-    }
-
     stages {
 
         stage('Checkout Code') {
@@ -44,10 +40,10 @@ pipeline {
 
     post {
         success {
-            echo "✅ Pipeline executed successfully"
+            echo "✅ CI pipeline completed successfully"
         }
         failure {
-            echo "❌ Pipeline failed"
+            echo "❌ CI pipeline failed"
         }
     }
 }
