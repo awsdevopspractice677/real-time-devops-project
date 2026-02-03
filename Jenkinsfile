@@ -1,11 +1,25 @@
 pipeline {
     agent any
 
+    tools {
+        maven 'Maven'   // Must exist in Jenkins Global Tool Configuration
+    }
+
     stages {
+
         stage('Checkout Code') {
             steps {
                 git branch: 'main',
                     url: 'https://github.com/awsdevopspractice677/real-time-devops-project.git'
+            }
+        }
+
+        stage('Build Backend JAR') {
+            steps {
+                sh '''
+                  cd app
+                  mvn clean package -DskipTests
+                '''
             }
         }
 
@@ -25,6 +39,15 @@ pipeline {
                   docker build -t frontend:v1 .
                 '''
             }
+        }
+    }
+
+    post {
+        success {
+            echo "✅ Pipeline executed successfully"
+        }
+        failure {
+            echo "❌ Pipeline failed"
         }
     }
 }
