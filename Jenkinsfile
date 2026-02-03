@@ -12,7 +12,7 @@ pipeline {
         stage('Build Backend Image') {
             steps {
                 sh '''
-                  cd backend
+                  cd app
                   docker build -t backend:v1 .
                 '''
             }
