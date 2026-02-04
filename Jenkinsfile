@@ -2,7 +2,6 @@ pipeline {
     agent any
 
     stages {
-
         stage('Checkout Code') {
             steps {
                 git branch: 'main',
@@ -13,7 +12,7 @@ pipeline {
         stage('Build Backend JAR') {
             steps {
                 sh '''
-                  cd app
+                  cd app/backend
                   mvn clean package -DskipTests
                 '''
             }
@@ -22,7 +21,7 @@ pipeline {
         stage('Build Backend Image') {
             steps {
                 sh '''
-                  cd app
+                  cd app/backend
                   docker build -t backend:v1 .
                 '''
             }
@@ -31,7 +30,7 @@ pipeline {
         stage('Build Frontend Image') {
             steps {
                 sh '''
-                  cd frontend
+                  cd app/frontend
                   docker build -t frontend:v1 .
                 '''
             }
@@ -40,10 +39,10 @@ pipeline {
 
     post {
         success {
-            echo "✅ CI pipeline completed successfully"
+            echo '✅ CI pipeline completed successfully'
         }
         failure {
-            echo "❌ CI pipeline failed"
+            echo '❌ CI pipeline failed'
         }
     }
 }
